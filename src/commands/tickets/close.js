@@ -9,7 +9,7 @@ module.exports = {
   description: "Close a ticket",
   userPerms: ["BAN_MEMBERS"],
   botPerms: ["MANAGE_CHANNELS", "EMBED_LINKS"],
-  async execute(client, message, args, prefix) {
+  async execute(message, args) {
     const user = message.mentions.users.first();
     let logs = await message.guild.channels.fetch(config.logs);
 
@@ -25,9 +25,7 @@ module.exports = {
       const codeEmbed = new MessageEmbed()
         .setTitle("Close confirmation")
         .setColor("#f5bc42")
-        .setDescription(
-          "To close the ticket, Write the 4 digit code you will find in this message."
-        )
+        .setDescription("To close the ticket, Write the 4 digit code you will find in this message.")
         .addField("Code", `${code}`)
         .setFooter("This process will time out after 60 seconds");
 
@@ -35,8 +33,7 @@ module.exports = {
 
       // start a collector of the 4 digits code
 
-      const filter = (m) =>
-        m.content.trim() == `${code}` && m.author.id == message.author.id;
+      const filter = (m) => m.content.trim() == `${code}` && m.author.id == message.author.id;
       const collector = message.channel.createMessageCollector({
         filter,
         time: 60000,
@@ -45,11 +42,7 @@ module.exports = {
 
       collector.on("collect", async () => {
         msg.delete().catch(console.error);
-        message
-          .reply(
-            "The ticket will be closed in 15 seconds. I will notify the user about it."
-          )
-          .catch(console.error);
+        message.reply("The ticket will be closed in 15 seconds. I will notify the user about it.").catch(console.error);
         setTimeout(async () => {
           // delete the ticket channel
           const ticketCh = await message.guild.channels.fetch(ticket.channel);
@@ -102,10 +95,8 @@ module.exports = {
 
           if (args[1])
             closeDM.addField("Reason", `\`${args.slice(1).join(" ")}\``);
-          if (
-            message.attachments.size > 0 &&
-            isImage(message.attachments.first().name)
-          )
+
+          if (message.attachments.size > 0 && isImage(message.attachments.first().name))
             closeDM.setImage(message.attachments.first().url);
 
           user.send({ embeds: [closeDM] }).catch(console.log);
@@ -115,12 +106,10 @@ module.exports = {
       // If the user didn't type the 4 digits code
       collector.on("end", (c) => {
         if (c.size == 0)
-          msg
-            .edit({
-              content: `:x: The time ended and I didn't receive any answer!`,
-              embeds: [],
-            })
-            .catch((e) => console.log(new Error(e)));
+          msg.edit({
+            content: `:x: The time ended and I didn't receive any answer!`,
+            embeds: [],
+          }).catch((e) => console.log(new Error(e)));
       });
     } else {
       const ticket = await ticketModel.findOne({ channel: message.channel.id });
@@ -137,9 +126,7 @@ module.exports = {
       const codeEmbed = new MessageEmbed()
         .setTitle("Close confirmation")
         .setColor("#f5bc42")
-        .setDescription(
-          "To close the ticket, Write the 4 digit code you will find in this message."
-        )
+        .setDescription("To close the ticket, Write the 4 digit code you will find in this message.")
         .addField("Code", `${code}`)
         .setFooter("This process will time out after 60 seconds");
 
@@ -147,8 +134,7 @@ module.exports = {
 
       // start a collector of the 4 digits code
 
-      const filter = (m) =>
-        m.content.trim() == `${code}` && m.author.id == message.author.id;
+      const filter = (m) => m.content.trim() == `${code}` && m.author.id == message.author.id;
       const collector = message.channel.createMessageCollector({
         filter,
         time: 60000,
@@ -157,11 +143,7 @@ module.exports = {
 
       collector.on("collect", async () => {
         msg.delete().catch(console.error);
-        message
-          .reply(
-            "The ticket will be closed in 15 seconds. I will notify the user about it."
-          )
-          .catch(console.error);
+        message.reply("The ticket will be closed in 15 seconds. I will notify the user about it.").catch(console.error);
         setTimeout(async () => {
           // delete the ticket channel
           message.channel.delete(`Ticket closed by ${message.author.id}`);
@@ -213,10 +195,7 @@ module.exports = {
 
           if (args[1])
             closeDM.addField("Reason", `\`${args.slice(1).join(" ")}\``);
-          if (
-            message.attachments.size > 0 &&
-            isImage(message.attachments.first().name)
-          )
+          if (message.attachments.size > 0 && isImage(message.attachments.first().name))
             closeDM.setImage(message.attachments.first().url);
 
           user.send({ embeds: [closeDM] }).catch(console.log);
@@ -226,12 +205,10 @@ module.exports = {
       // If the user didn't type the 4 digits code
       collector.on("end", (c) => {
         if (c.size == 0)
-          msg
-            .edit({
-              content: `:x: The time ended and I didn't receive any answer!`,
-              embeds: [],
-            })
-            .catch((e) => console.log(new Error(e)));
+          msg.edit({
+            content: `:x: The time ended and I didn't receive any answer!`,
+            embeds: [],
+          }).catch((e) => console.log(new Error(e)));
       });
     }
   },

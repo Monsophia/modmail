@@ -49,9 +49,7 @@ module.exports = {
       let url = message.attachments.first().proxyURL;
       let name = url.slice(url.lastIndexOf("/") + 1);
 
-      const sendThis = args[0]
-        ? `${content}\n [File URL](${url})`
-        : `[File URL](${url})`;
+      const sendThis = args[0] ? `${content}\n [File URL](${url})` : `[File URL](${url})`;
 
       const replyEmbed = new MessageEmbed()
         .setAuthor(message.author.username, avatar)
@@ -64,16 +62,12 @@ module.exports = {
         replyEmbed.setFooter("WARNING: This file may be dangerous");
       }
 
-      user
-        .send({
-          embeds: [replyEmbed],
-        })
-        .then(message.react(client.myemojis.get("sent")));
+      user.send({
+        embeds: [replyEmbed],
+      }).then(message.react(client.myemojis.get("sent")));
 
       // send message sent log
-      let text = args[0]
-        ? `${content}\n [File URL](${url})`
-        : `[File URL](${url})`;
+      let text = args[0] ? `${content}\n [File URL](${url})` : `[File URL](${url})`;
 
       const sentEmbed = new MessageEmbed()
         .setAuthor(message.author.username, avatar)
@@ -94,9 +88,7 @@ module.exports = {
         .setColor("#42c5f5")
         .setTimestamp();
 
-      user
-        .send({ embeds: [replyDM] })
-        .then(message.react(client.myemojis.get("sent")));
+      user.send({ embeds: [replyDM] }).then(message.react(client.myemojis.get("sent")));
 
       // send Message sent log
       const sentEmbed = new MessageEmbed()

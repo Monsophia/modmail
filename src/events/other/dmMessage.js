@@ -35,7 +35,7 @@ module.exports = async (message) => {
   if (!ticket) {
     // If the user is blocked
     if (blocked) {
-     return message.react(client.myemojis.get("blocked"));
+      return message.react(client.myemojis.get("blocked"));
     }
 
     // create channel
@@ -97,18 +97,13 @@ module.exports = async (message) => {
       }
       const sendThis = content.length > 0 ? content : " ";
 
-      modHook
-        .send({
-          content: sendThis,
-          embeds: [hookEmbed],
-        })
-        .then(message.reply("Message sent! Wait while the staff answers you."));
+      modHook.send({
+        content: sendThis,
+        embeds: [hookEmbed],
+      }).then(message.reply("Message sent! Wait while the staff answers you."));
 
       // send message received log
-      let text =
-        content.length > 0
-          ? `${content}\n [File URL](${url})`
-          : `[File URL](${url})`;
+      let text = content.length > 0 ? `${content}\n [File URL](${url})` : `[File URL](${url})`;
 
       const receivedEmbed = new MessageEmbed()
         .setAuthor(author.username, avatar)
@@ -181,18 +176,13 @@ module.exports = async (message) => {
       }
       const sendThis = content.length > 0 ? content : " ";
 
-      modHook
-        .send({
-          content: sendThis,
-          embeds: [hookEmbed],
-        })
-        .then(message.react(client.myemojis.get("sent")));
+      modHook.send({
+        content: sendThis,
+        embeds: [hookEmbed],
+      }).then(message.react(client.myemojis.get("sent")));
 
       // send message received log
-      let text =
-        content.length > 0
-          ? `${content}\n [File URL](${url})`
-          : `[File URL](${url})`;
+      let text = content.length > 0 ? `${content}\n [File URL](${url})` : `[File URL](${url})`;
 
       const answerEmbed = new MessageEmbed()
         .setAuthor(author.username, avatar)

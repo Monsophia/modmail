@@ -8,7 +8,7 @@ module.exports = {
   description: "Block someone from using the modmail system",
   userPerms: ["BAN_MEMBERS"],
   botPerms: ["MANAGE_CHANNELS", "EMBED_LINKS"],
-  async execute(client, message, args, prefix) {
+  async execute(message, args) {
     let mention = message.mentions.members.first();
     let logs = await message.guild.channels.fetch(config.logs);
 
@@ -18,7 +18,7 @@ module.exports = {
         _id: mention.id,
       });
 
-      if (blocked) return message.reply("That user is alredy blocked");
+      if (blocked) return message.reply("That user is already blocked");
 
       // set the reason
       let reason = args[1] ? args.slice(1).join(" ") : "Not provided";
@@ -40,16 +40,12 @@ module.exports = {
         const ticketCh = await message.guild.channels.fetch(ticket.channel);
         ticketCh.delete("Ticket owner was blocked");
 
-        await ticketModel
-          .findOneAndDelete({
-            _id: mention.id,
-          })
-          .catch(console.error);
+        await ticketModel.findOneAndDelete({
+          _id: mention.id,
+        }).catch(console.error);
       }
 
-      message
-        .reply(`Succesfully blocked ${mention} from using the modmail system`)
-        .catch(console.error);
+      message.reply(`Succesfully blocked ${mention} from using the modmail system`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({
@@ -123,17 +119,13 @@ module.exports = {
       });
 
       if (ticket) {
-        await ticketModel
-          .findOneAndDelete({
-            _id: member.id,
-          })
-          .catch(console.error);
+        await ticketModel.findOneAndDelete({
+          _id: member.id,
+        }).catch(console.error);
       }
 
       if (ticket.channel != message.channel.id) {
-        message
-          .reply(`Succesfully blocked ${member} from using the modmail system`)
-          .catch(console.error);
+        message.reply(`Succesfully blocked ${member} from using the modmail system`).catch(console.error);
       }
 
       // alternate image (author)

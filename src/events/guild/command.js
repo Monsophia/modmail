@@ -17,11 +17,7 @@ module.exports = async (message, cooldowns) => {
   const args = message.content.substring(p.length).trim().split(" ");
   const commandName = args.shift().toLowerCase();
 
-  const command =
-    client.commands.get(commandName) ||
-    client.commands.find(
-      (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-    );
+  const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
 
@@ -31,9 +27,7 @@ module.exports = async (message, cooldowns) => {
 
   // bot permissions handler
   if (!message.guild.me.permissions.has(command.botPerms || []))
-    return message.reply(
-      `Ups :/  I need ${command.botPerms} to run this command correctly`
-    );
+    return message.reply(`Ups :/  I need ${command.botPerms} to run this command correctly`);
 
   // cooldowns
   if (!cooldowns.has(command.name)) {
@@ -53,11 +47,9 @@ module.exports = async (message, cooldowns) => {
       const tleft1 = Math.round(timeLeft.toFixed(3));
       let tleft = readTime(tleft1);
 
-      return message
-        .reply(`Please wait ${tleft} before using \`${command.name}\` again.`)
-        .then((msg) => {
-          msg.delete({ timeout: 5000 });
-        });
+      return message.reply(`Please wait ${tleft} before using \`${command.name}\` again.`).then((msg) => {
+        msg.delete({ timeout: 5000 });
+      });
     }
   }
 
@@ -69,13 +61,10 @@ module.exports = async (message, cooldowns) => {
     command.execute(client, message, args, p, cooldowns);
   } catch (error) {
     console.error(error);
-    message.channel
-      .send("There was an error executing that command.")
-      .then((msg) => {
-        setTimeout(() => {
-          msg.delete();
-        }, 5000);
-      })
-      .catch(console.error);
+    message.channel.send("There was an error executing that command.").then((msg) => {
+      setTimeout(() => {
+        msg.delete();
+      }, 5000);
+    }).catch(console.error);
   }
 };

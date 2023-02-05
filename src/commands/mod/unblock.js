@@ -1,15 +1,13 @@
-const ticketModel = require("../../models/ticket");
 const blockModel = require("../../models/block");
 const config = require("../../json/config.json");
 const { MessageEmbed } = require("discord.js");
-const block = require("./block");
 
 module.exports = {
   name: "unblock",
   description: "Unblock someone from using the modmail system",
   userPerms: ["BAN_MEMBERS"],
   botPerms: ["EMBED_LINKS"],
-  async execute(client, message, args, prefix) {
+  async execute(message, args) {
     let mention = message.mentions.members.first();
     let logs = await message.guild.channels.fetch(config.logs);
 
@@ -22,13 +20,9 @@ module.exports = {
       if (!blocked) return message.reply("That user is not blocked");
 
       // delete blok doc
-      await blockModel
-        .findOneAndDelete({ _id: mention.id })
-        .catch(console.error);
+      await blockModel.findOneAndDelete({ _id: mention.id }).catch(console.error);
 
-      message
-        .reply(`Succesfully unblocked ${mention} from using the modmail system`)
-        .catch(console.error);
+      message.reply(`Succesfully unblocked ${mention} from using the modmail system`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({
@@ -85,13 +79,9 @@ module.exports = {
       if (!blocked) return message.reply("That user is not blocked");
 
       // delete blok doc
-      await blockModel
-        .findOneAndDelete({ _id: mention.id })
-        .catch(console.error);
+      await blockModel.findOneAndDelete({ _id: mention.id }).catch(console.error);
 
-      message
-        .reply(`Succesfully unblocked ${member} from using the modmail system`)
-        .catch(console.error);
+      message.reply(`Succesfully unblocked ${member} from using the modmail system`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({

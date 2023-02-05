@@ -7,7 +7,7 @@ module.exports = {
   description: "Remove someone from a ticket",
   userPerms: ["BAN_MEMBERS"],
   botPerms: ["MANAGE_CHANNELS", "EMBED_LINKS"],
-  async execute(client, message, args, prefix) {
+  async execute(message, args) {
     let mention = message.mentions.members.first();
     let logs = await message.guild.channels.fetch(config.logs);
 
@@ -17,11 +17,7 @@ module.exports = {
       if (!ticket)
         return message.reply("This channel doesn't belong to a ticket");
 
-      if (
-        !mention
-          .permissionsIn(message.channel)
-          .has(["VIEW_CHANNEL", "SEND_MESSAGES"])
-      )
+      if (!mention.permissionsIn(message.channel).has(["VIEW_CHANNEL", "SEND_MESSAGES"]))
         return message.reply("That user isn't in this ticket");
 
       // remove perms to the channel from the user
@@ -32,9 +28,7 @@ module.exports = {
         READ_MESSAGE_HISTORY: false,
       });
 
-      message
-        .reply(`Succesfully removed ${mention} from the ticket`)
-        .catch(console.error);
+      message.reply(`Succesfully removed ${mention} from the ticket`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({
@@ -88,11 +82,7 @@ module.exports = {
       if (!ticket)
         return message.reply("This channel doesn't belong to a ticket");
 
-      if (
-        !member
-          .permissionsIn(message.channel)
-          .has(["VIEW_CHANNEL", "SEND_MESSAGES"])
-      )
+      if (!member.permissionsIn(message.channel).has(["VIEW_CHANNEL", "SEND_MESSAGES"]))
         return message.reply("That user isn't in this ticket");
 
       // remove perms to the channel from the user
@@ -103,9 +93,7 @@ module.exports = {
         READ_MESSAGE_HISTORY: false,
       });
 
-      message
-        .reply(`Succesfully removed ${member} from the ticket`)
-        .catch(console.error);
+      message.reply(`Succesfully removed ${member} from the ticket`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({

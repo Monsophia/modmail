@@ -17,11 +17,7 @@ module.exports = {
       if (!ticket)
         return message.reply("This channel doesn't belong to a ticket");
 
-      if (
-        mention
-          .permissionsIn(message.channel)
-          .has(["VIEW_CHANNEL", "SEND_MESSAGES"])
-      )
+      if (mention.permissionsIn(message.channel).has(["VIEW_CHANNEL", "SEND_MESSAGES"]))
         return message.reply("That user is alredy in this ticket");
 
       // add perms to the channel for the user
@@ -32,9 +28,7 @@ module.exports = {
         READ_MESSAGE_HISTORY: true,
       });
 
-      message
-        .reply(`Succesfully added ${mention} to the ticket`)
-        .catch(console.error);
+      message.reply(`Succesfully added ${mention} to the ticket`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({
@@ -88,11 +82,7 @@ module.exports = {
       if (!ticket)
         return message.reply("This channel doesn't belong to a ticket");
 
-      if (
-        member
-          .permissionsIn(message.channel)
-          .has(["VIEW_CHANNEL", "SEND_MESSAGES"])
-      )
+      if (member.permissionsIn(message.channel).has(["VIEW_CHANNEL", "SEND_MESSAGES"]))
         return message.reply("That user is alredy in this ticket");
 
       // add perms to the channel for the user
@@ -103,9 +93,7 @@ module.exports = {
         READ_MESSAGE_HISTORY: true,
       });
 
-      message
-        .reply(`Succesfully added ${member} to the ticket`)
-        .catch(console.error);
+      message.reply(`Succesfully added ${member} to the ticket`).catch(console.error);
 
       // alternate image (author)
       const avatarGif = message.author.displayAvatarURL({

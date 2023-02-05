@@ -17,7 +17,7 @@ function loadEvents(client) {
   client.on("messageCreate", (m) => otherEvent("dmMessage")(m));
   client.on("channelDelete", (c) => otherEvent("channelDelete")(c,));
   client.on("guildMemberRemove", (m) => otherEvent("userLeft")(m));
-  //client.on("interactionCreate", (i) => otherEvent("interaction")(i, client));
+  client.on("interactionCreate", (i) => otherEvent("interaction")(i, client));
 
   // warnings and errors
   client.on("warn", (info) => console.log(info));

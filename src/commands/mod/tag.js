@@ -6,8 +6,8 @@ module.exports = {
   name: "topic",
   description: "Set the topic of a ticket,",
   userPerms: ["BAN_MEMBERS"],
-  botPerms: ["MANAGE_CHANNELS","EMBED_LINKS"],
-  async execute(client, message, args, prefix) {
+  botPerms: ["MANAGE_CHANNELS", "EMBED_LINKS"],
+  async execute(message, args) {
     const user = message.mentions.users.first();
     let logs = await message.guild.channels.fetch(config.logs);
 

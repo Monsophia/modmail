@@ -24,23 +24,9 @@ module.exports = (client) => {
     chalk.bgMagentaBright.black(` ${allMembers.size} members `)
   );
 
-  mongoose
-    .connect(process.env.mongo_url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(
-      console.log(
-        chalk.bgGreenBright.black(
-          ` ${client.user.username} connecting to Mongo DB `
-        )
-      )
-    )
-    .catch((err) =>
-      console.log(
-        chalk.bgRedBright.black(
-          ` ${client.user.username} could not connect to mongo DB ` + err
-        )
-      )
-    );
+  mongoose.connect(process.env.mongo_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(console.log(chalk.bgGreenBright.black(` ${client.user.username} connecting to Mongo DB `))).catch((err) =>
+    console.log(chalk.bgRedBright.black(` ${client.user.username} could not connect to mongo DB ` + err)));
 };
